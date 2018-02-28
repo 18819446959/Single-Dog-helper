@@ -25,6 +25,10 @@
 		{
 			name: 'mailtype',
 			value: 0
+		},
+		{
+			name: 'isSend',
+			value: 0
 		}
 	];
 
@@ -53,8 +57,10 @@
 
 			if($("#hTask2").html() == "恭喜你"){
 				clearInterval(time);
-				abTitle();
-				sendMail();
+				localStorage.isSend = 0;
+				$('.cpmenulist li').eq(1).find('a')[0].click();
+				//bTitle();
+				//sendMail();
 			}
 
 		},500);
