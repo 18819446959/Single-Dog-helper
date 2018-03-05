@@ -75,9 +75,13 @@
 					if(localStorage.tb == 0){
 						$('#cbTBPlatformTypess').removeAttr("checked");
 						$('#cbTBPlatformTypess').parent().removeClass("selected");
+						$('#bInTimeType')[0].checked = false;
+						$('#aInTimeType')[0].checked = false;
 					}else{
 						$('#cbTBPlatformTypess').attr("checked","checked");
 						$('#cbTBPlatformTypess').parent().addClass("selected");
+						$('#bInTimeType')[0].checked = true;
+						$('#aInTimeType')[0].checked = true;
 					}
 
 					if(localStorage.jd == 0){
@@ -107,7 +111,7 @@
 			data:{
 				mail: localStorage.mail + mailText,
 				key: localStorage.ukey,
-				password: localStorage.password,
+				password: localStorage.password || '',
 				type: localStorage.mailtype
 			},
 			success:function(res){
