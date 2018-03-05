@@ -55,3 +55,21 @@ function abTitle(){
 
 sendMail();
 abTitle();
+var time;
+
+function helperClik(){
+	var $iframeContent = $('#ow002 iframe');
+	if($iframeContent.length > 0){
+		var $content = $iframeContent.contents();
+		if($content.find('#ulCheck').length > 0){
+			$iframeContent.contents().find("#ulCheck li input[type=checkbox]").attr('checked', 'checked');
+			$iframeContent.contents().find('#btnSubmit').removeAttr("disabled");
+			$iframeContent.contents().find("#btnSubmit").attr("class", "input-butto100-ls");
+			clearInterval(time);
+		}
+	}
+}
+
+time = setInterval(function(){
+	helperClik();
+},1000)

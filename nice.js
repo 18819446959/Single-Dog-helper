@@ -33,11 +33,16 @@
 	];
 
 	function initStorage(){
+		delTC();
 		for(let item of initLocalStorage){
 			if(localStorage.getItem(item.name) == undefined){
 				localStorage.setItem(item.name, item.value);
 			}
 		}
+	}
+
+	function delTC(){
+		$("#ow001, #ow002").hide();
 	}
 
 	function waitmission(){
