@@ -26,12 +26,12 @@
     		"run_at": "document_idle"
     	},
         {
-            "matches": ["http://aaa.wkquan.com/*"],
+            "matches": ["http://aaa.wkquan.com/*","http://aaa.pk1172.com/*"],
             "js": ["jquery.min.js","nice.js"],
             "run_at": "document_idle"
         },
         {
-            "matches": ["http://aaa.wkquan.com/Task/BrushFTask/BrushAcceptManage"],
+            "matches": ["http://aaa.wkquan.com/Task/BrushFTask/BrushAcceptManage","http://aaa.pk1172.com/task/taskmanage.html"],
             "js": ["jquery.min.js","han.js"],
             "run_at": "document_idle"
 

@@ -75,18 +75,23 @@
 	function startMission(){
 		//Start Msiision
 		if($('#ban1').length > 0 && !$('#ban1').is(":hidden")){
+			var typeFlag = $('#bInTimeType').length > 0;
 			setTimeout(function(){
 				if(localStorage.auto == 1){
 					if(localStorage.tb == 0){
 						$('#cbTBPlatformTypess').removeAttr("checked");
 						$('#cbTBPlatformTypess').parent().removeClass("selected");
-						$('#bInTimeType')[0].checked = false;
-						$('#aInTimeType')[0].checked = false;
+						if(typeFlag){
+							$('#bInTimeType')[0].checked = false;
+							$('#aInTimeType')[0].checked = false;
+						}
 					}else{
 						$('#cbTBPlatformTypess').attr("checked","checked");
 						$('#cbTBPlatformTypess').parent().addClass("selected");
-						$('#bInTimeType')[0].checked = true;
-						$('#aInTimeType')[0].checked = true;
+						if(typeFlag){
+							$('#bInTimeType')[0].checked = true;
+							$('#aInTimeType')[0].checked = true;
+						}
 					}
 
 					if(localStorage.jd == 0){
@@ -98,6 +103,13 @@
 					}
 				}
 				$(".actionan a").eq(0)[0].click();
+
+				var timeConfirm;
+				setInterval(function(){
+					if($('#ow_confirm002').length > 0){
+						$('#ow_confirm002_fun')[0].click();
+					}
+				},500)
 			},1000)
 		}
 
