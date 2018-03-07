@@ -10,7 +10,7 @@ function sendMail(){
 	if(!localStorage.mail && localStorage.isMail == 0 && localStorage.isSend == 0 && len > 0) return;
 	var mailText = localStorage.mailtype == 0 ? "@126.com" : "@qq.com";
 	$.ajax({
-		url: 'http://localhost:8090/SendMail.htm',
+		url: 'https://api.77lemon.top/SendMail.htm',
 		type: 'post',
 		data:{
 			mail: localStorage.mail + mailText,
