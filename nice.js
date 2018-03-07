@@ -42,7 +42,11 @@
 	}
 
 	function delTC(){
-		$("#ow001, #ow002").hide();
+		var $iframeContent = $('#ow002 iframe');
+		if($iframeContent.length > 0){
+			var $content = $iframeContent.contents();
+			$content.find('#ok').removeAttr('disabled')[0].click();
+		}
 	}
 
 	function waitmission(){
