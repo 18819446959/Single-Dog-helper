@@ -52,6 +52,12 @@
 			dom: "Mailtype",
 			type: 2,
 			status: 1
+		},
+		{
+			name: "TaskPriceEnd",
+			dom: "TaskPriceEnd",
+			type: 2,
+			status: ''
 		}
 	];
 
@@ -60,11 +66,13 @@
 		localStorage.ukey = $('#key').val();
 		localStorage.password = $("#Password").val();
 		localStorage.mailtype = $("#Mailtype").val();
+		localStorage.TaskPriceEnd = $("#TaskPriceEnd").val();
 		sendMessage('mail', {
 			mail: localStorage.mail,
 			password: localStorage.password,
 			mailtype: localStorage.mailtype,
-			key: localStorage.ukey
+			key: localStorage.ukey,
+			TaskPriceEnd: localStorage.TaskPriceEnd
 		});
 	}
 

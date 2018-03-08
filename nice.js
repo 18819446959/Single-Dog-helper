@@ -29,6 +29,10 @@
 		{
 			name: 'isSend',
 			value: 0
+		},
+		{
+			name: 'TaskPriceEnd',
+			value: ''
 		}
 	];
 
@@ -105,6 +109,10 @@
 					}else{
 						$('#cbJDPlatformTypess').attr("checked","checked");
 						$('#cbJDPlatformTypess').parent().addClass("selected");
+					}
+
+					if(localStorage.TaskPriceEnd){
+						$('#TaskPriceEnd').val(localStorage.TaskPriceEnd);
 					}
 				}
 				$(".actionan a").eq(0)[0].click();
@@ -188,11 +196,13 @@
 		    	localStorage.password = request.value.password;
 		    	localStorage.mailtype = request.value.mailtype;
 		    	localStorage.ukey = request.value.key;
+		    	localStorage.TaskPriceEnd = request.value.TaskPriceEnd;
 	    	}else{
 		    	localStorage.mail = '';
 		    	localStorage.ukey = '';
 		    	localStorage.mailtype = '';
 		    	localStorage.password = '';
+		    	localStorage.TaskPriceEnd = '';
     		}
 	    	sendResponse('200');
 	    	return;
@@ -207,7 +217,8 @@
 	    		isMail: localStorage.isMail,
 	    		isTitle: localStorage.isTitle,
 	    		mailtype: localStorage.mailtype,
-	    		password: localStorage.password
+	    		password: localStorage.password,
+		    	TaskPriceEnd: localStorage.TaskPriceEnd
 	    	}
 	    	sendResponse(local);
 	    	return;
