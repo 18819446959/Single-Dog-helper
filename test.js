@@ -123,6 +123,8 @@
 
 	//获取页面缓存
 	initSetting();
+	//获取版本
+	getVersion();
 
 	$('.container').on('click', 'input[type=checkbox]', function(){
 		var name = $(this).attr("name");
@@ -155,3 +157,30 @@
 		    console.log(response);
 		});
 	});
+
+
+	function getVersion(){
+		var L_v,
+			N_v;
+        $.ajax({
+            url: "https://raw.githubusercontent.com/JYMr/Single-Dog-helper/master/manifest.json",
+            async: false,
+            dataType: 'json',
+            success: function(res){
+                L_v = res.version;
+            }
+        })
+
+        $.ajax({
+            url: "./manifest.json",
+            async: false,
+            dataType: 'json',
+            success: function(res){
+                N_v = res.version;
+            }
+        })
+        
+        if(N_v < L_v){
+        	$('#version').html("有新版本!,要不要考虑更新下!");
+        }
+    }
