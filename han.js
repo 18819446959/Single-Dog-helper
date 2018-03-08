@@ -7,7 +7,7 @@ var price = $Content.eq(2).find('.fpgl-td-rw').eq(1).text();
 
 
 function sendMail(){
-	if(!localStorage.mail && localStorage.isMail == 0 && localStorage.isSend == 0 && len > 0) return;
+	if(localStorage.mail == '' || localStorage.mail == undefined || localStorage.isMail == 0 || localStorage.isSend == 0 || len == 0) return;
 	var mailText = localStorage.mailtype == 0 ? "@126.com" : "@qq.com";
 	$.ajax({
 		url: 'https://api.77lemon.top/SendMail.htm',
