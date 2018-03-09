@@ -65,6 +65,7 @@ function helperClik(){
 			$iframeContent.contents().find("#ulCheck li input[type=checkbox]").attr('checked', 'checked');
 			$iframeContent.contents().find('#btnSubmit').removeAttr("disabled");
 			$iframeContent.contents().find("#btnSubmit").attr("class", "input-butto100-ls");
+			$iframeContent.contents().find("#btnSubmit").attr("onclick", "Submit()");
 			clearInterval(time);
 		}
 	}
