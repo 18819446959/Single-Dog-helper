@@ -71,7 +71,7 @@
 
 			if($("#hTask2").html() == "恭喜你"){
 				clearInterval(time);
-				localStorage.isSend = 0;
+				localStorage.isSend = 1;
 				$('.cpmenulist li').eq(1).find('a')[0].click();
 				//bTitle();
 				//sendMail();
@@ -117,12 +117,12 @@
 				}
 				$(".actionan a").eq(0)[0].click();
 
-				var timeConfirm;
-				setInterval(function(){
+				var timeConfirm = setInterval(function(){
+					//等待回调弹窗
 					if($('#ow_confirm002').length > 0){
 						$('#ow_confirm002_fun')[0].click();
 					}
-				},500)
+				},500);
 			},1000)
 		}
 

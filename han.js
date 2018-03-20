@@ -57,7 +57,7 @@ sendMail();
 abTitle();
 var time;
 
-function helperClik(){
+function clickHelper(){
 	var $iframeContent = $('#ow002 iframe');
 	if($iframeContent.length > 0){
 		var $content = $iframeContent.contents();
@@ -72,5 +72,5 @@ function helperClik(){
 }
 
 time = setInterval(function(){
-	helperClik();
+	clickHelper();
 },1000)
