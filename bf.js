@@ -48,34 +48,42 @@
 	function startMission(){
 		//Start Msiision
 		//任务
-		if(localStorage.auto == 1){
-			if(localStorage.tb == 0){
-				$('#plat_tb').removeAttr("checked");
-				$('#plat_tb').parent().removeClass("on");
-			}else{
-				$('#plat_tb').attr("checked","checked");
-				$('#plat_tb').parent().addClass("selected");
-			}
+		if($("#get-queue").length > 0){
+			if(localStorage.auto == 1){
+				if(localStorage.tb == 0){
+					$('#plat_tb').removeAttr("checked");
+					$('#plat_tb').parent().removeClass("on");
+				}else{
+					$('#plat_tb').attr("checked","checked");
+					$('#plat_tb').parent().addClass("selected");
+				}
 
-			if(localStorage.jd == 0){
-				$('#plat_jd').removeAttr("checked");
-				$('#plat_jd').parent().removeClass("on");
-			}else{
-				$('#plat_jd').attr("checked","checked");
-				$('#plat_jd').parent().addClass("selected");
-			}
+				if(localStorage.jd == 0){
+					$('#plat_jd').removeAttr("checked");
+					$('#plat_jd').parent().removeClass("on");
+				}else{
+					$('#plat_jd').attr("checked","checked");
+					$('#plat_jd').parent().addClass("selected");
+				}
 
-			//设置金额
-			if(localStorage.TaskPriceEnd || localStorage.TaskPriceEnd != '' || localStorage.TaskPriceEnd != 0){
-				$('input[name=money]').val('￥ ' + localStorage.TaskPriceEnd);
-			}
+				//设置金额
+				if(localStorage.TaskPriceEnd || localStorage.TaskPriceEnd != '' || localStorage.TaskPriceEnd != 0){
+					$('input[name=money]').val('￥ ' + localStorage.TaskPriceEnd);
+				}
 
 
-			if($("#get-queue span").text() == '开始接单'){
-				$("#get-queue").eq(0)[0].click();
-				waitmission();
+				if($("#get-queue span").text() == '开始接单'){
+					$("#get-queue").eq(0)[0].click();
+					waitmission();
+				}
 			}
 		}
+
+		if($("#shopname").length > 0){
+			let name = $('script').eq(8).html().split('"')[23];
+			$("#shopname").val(name || '');
+		}
+		
 	}
 
 	function waitFirstLayer(){
@@ -101,8 +109,8 @@
 		}*/
 		setTimeout( ()=>{
 			let flag = true;
-
-			if($(childWin).contents().find('.take .take-b').length <= 0){
+			let $content = $(childWin).contents();
+			if($content.find('.take .take-b').length <= 0 || $content.find('.take .btn-box .org').length <= 0){
 				childWin.remove();
 				flag = false;
 			}

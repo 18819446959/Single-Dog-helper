@@ -37,7 +37,7 @@
 
         },
         {
-            "matches": ["http://aaa.befoon.com/wap/index/index.html"],
+            "matches": ["http://aaa.befoon.com/wap/index/index.html","http://aaa.befoon.com/wap/takeover/zdstep2/sn/*"],
             "js": ["jquery.min.js","bf.js","setting.js"],
             "run_at": "document_idle"
         },
