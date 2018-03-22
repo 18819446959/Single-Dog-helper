@@ -37,14 +37,6 @@
 	//检测区间
 	let time = 20;
 
-	function initStorage(){
-		for(let item of initLocalStorage){
-			if(localStorage.getItem(item.name) == undefined){
-				localStorage.setItem(item.name, item.value);
-			}
-		}
-	}
-
 	function startMission(){
 		//Start Msiision
 		//任务
@@ -175,5 +167,3 @@
 
 	//过滤弹窗
 	waitFirstLayer();
-	//初始化缓存
-	initStorage();

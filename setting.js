@@ -115,3 +115,27 @@
 			}
 		},1000)
 	}
+
+	function initStorage(){
+
+		chrome.storage.local.get({
+			email: '',
+			type: '',
+			password: ''
+		},function(items) {
+		    localStorage.mail = items.email;
+		    localStorage.password = items.password;
+		    localStorage.mailtype = items.type;
+
+		    for(let item of initLocalStorage){
+				if(localStorage.getItem(item.name) == undefined){
+					localStorage.setItem(item.name, item.value);
+				}
+			}
+		});
+	}
+
+		
+
+	//初始化缓存
+	initStorage();
