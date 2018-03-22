@@ -155,27 +155,6 @@
 		});
 	}
 
-	function abTitle(){
-		if(localStorage.isTitle == 0) return;
-		//获取现有标题
-		let title = document.title;
-
-		let hasNew = "【有单啦】";
-		let noNew = "【   ---   】";
-
-		let flag = true;
-
-		setInterval(function(){
-			if(flag){
-				document.title = hasNew + title;
-				flag = false;
-			}else{
-				document.title = noNew + title;
-				flag = true;
-			}
-		},1000)
-	}
-
 	//localStorage.auto
 	//localStorage.tb
 	//localStorage.jd

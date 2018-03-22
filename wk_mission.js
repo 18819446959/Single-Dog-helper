@@ -1,14 +1,14 @@
 
 
-var $Content = $(".fprw-pg tr").eq(1).find('td');
-var len = $Content.eq(4).find('input').length;
-var type = $Content.eq(1).find('.fpgl-td-rw b').text();
-var price = $Content.eq(2).find('.fpgl-td-rw').eq(1).text();
+let $Content = $(".fprw-pg tr").eq(1).find('td');
+let len = $Content.eq(4).find('input').length;
+let type = $Content.eq(1).find('.fpgl-td-rw b').text();
+let price = $Content.eq(2).find('.fpgl-td-rw').eq(1).text();
 
 
 function sendMail(){
 	if(localStorage.mail == '' || localStorage.mail == undefined || localStorage.isMail == 0 || localStorage.isSend == 0 || len == 0) return;
-	var mailText = localStorage.mailtype == 0 ? "@126.com" : "@qq.com";
+	let mailText = localStorage.mailtype == 0 ? "@126.com" : "@qq.com";
 	$.ajax({
 		url: 'https://api.77lemon.top/SendMail.htm',
 		type: 'post',
@@ -32,7 +32,8 @@ function sendMail(){
 }
 
 function abTitle(){
-	if(localStorage.isTitle == 0 && localStorage.isSend == 0 && len > 0) return;
+	if(localStorage.isTitle == 0) return;
+	if(localStorage.isSend == 0 || len == 0) return;
 	//获取现有标题
 	let title = document.title;
 
@@ -55,17 +56,21 @@ function abTitle(){
 
 sendMail();
 abTitle();
-var time;
+let time;
 
 function clickHelper(){
-	var $iframeContent = $('#ow002 iframe');
+	let $iframeContent = $('#ow002 iframe');
 	if($iframeContent.length > 0){
-		var $content = $iframeContent.contents();
+		let $content = $iframeContent.contents();
 		if($content.find('#ulCheck').length > 0){
-			$iframeContent.contents().find("#ulCheck li input[type=checkbox]").attr('checked', 'checked');
-			$iframeContent.contents().find('#btnSubmit').removeAttr("disabled");
-			$iframeContent.contents().find("#btnSubmit").attr("class", "input-butto100-ls");
-			$iframeContent.contents().find("#btnSubmit").attr("onclick", "Submit()");
+
+			$content.find("#ulCheck li input[type=checkbox]").attr('checked', 'checked');
+			$content.find('#btnSubmit').removeAttr("disabled");
+			$content.find("#btnSubmit").attr("class", "input-butto100-ls");
+
+			if($content.find("#btnSubmit").attr("onclick") != ''){
+				$content.find("#btnSubmit").attr("onclick", "Submit()");
+			}
 			clearInterval(time);
 		}
 	}
