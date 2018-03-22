@@ -68,7 +68,7 @@ function clickHelper(){
 			$content.find('#btnSubmit').removeAttr("disabled");
 			$content.find("#btnSubmit").attr("class", "input-butto100-ls");
 
-			if($content.find("#btnSubmit").attr("onclick") != ''){
+			if($content.find("#btnSubmit").attr("onclick") == ''){
 				$content.find("#btnSubmit").attr("onclick", "Submit()");
 			}
 			clearInterval(time);
