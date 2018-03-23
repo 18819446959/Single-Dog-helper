@@ -45,6 +45,8 @@
 		}
 	}
 
+	delTC();
+
 	function waitmission(){
 
 		let time;
