@@ -59,7 +59,7 @@ abTitle();
 let time;
 
 function clickHelper(){
-	let $iframeContent = $('#ow002 iframe');
+	/*let $iframeContent = $('#ow002 iframe');
 	if($iframeContent.length > 0){
 		let $content = $iframeContent.contents();
 		if($content.find('#ulCheck').length > 0){
@@ -73,8 +73,37 @@ function clickHelper(){
 			}
 			clearInterval(time);
 		}
+	}*/
+
+	let findLayer = function(iframe, layer, btn){
+		let $layer = iframe.contents().find(layer);
+		let $btn = iframe.contents().find(btn);
+		let $iframe = iframe.contents().find('iframe');
+		console.log("!!!")
+		if(iframe.length > 0 && $layer.length < 0 && $iframe.length > 0){
+			findLayer($iframe, layer);
+		}else if(iframe.length > 0 && $layer.length > 0 && $iframe.length <= 0){
+			return {$layer, $btn};
+		}else{
+			return {$layer, $btn};
+		}
+	}
+
+	let $iframeContent = $('#ow002 iframe');
+	let {$layer, $btn} = findLayer($iframeContent, '#ulCheck', '#btnSubmit');
+
+	if($layer){
+		$layer.find("li input[type=checkbox]").attr('checked', 'checked');
+		
+		$btn.removeAttr("disabled");
+		$btn.attr("class", "input-butto100-ls");
+
+		if($btn.attr("onclick") == ''){
+			$btn.attr("onclick", "Submit()");
+		}
 	}
 }
+
 
 time = setInterval(function(){
 	clickHelper();
