@@ -33,7 +33,7 @@ function sendMail(){
 
 function abTitle(){
 	if(localStorage.isTitle == 0) return;
-	if(localStorage.isSend == 0 || len == 0) return;
+	if(len == 0) return;
 	//获取现有标题
 	let title = document.title;
 
@@ -51,7 +51,6 @@ function abTitle(){
 			flag = true;
 		}
 	},1000)
-	localStorage.isSend = 0;
 }
 
 sendMail();

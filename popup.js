@@ -129,11 +129,7 @@
 
 	}
 
-	//获取页面缓存
-	initSetting();
-	//获取版本
-	getVersion();
-
+	//页面事件处理
 	$('.container').on('click', 'input[type=checkbox]', function(){
 		var name = $(this).attr("name");
 		var flag = $(this)[0].checked;
@@ -166,7 +162,7 @@
 		});
 	});
 
-
+	//更新检测
 	function getVersion(){
 		var L_v,
 			N_v;
@@ -192,3 +188,9 @@
         	$('#version').html("有新版本!,要不要考虑更新下!");
         }
     }
+
+    
+	//获取页面缓存
+	initSetting();
+	//获取版本
+	getVersion();

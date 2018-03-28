@@ -21,15 +21,9 @@
             "chrome_style": true
     },
 	"permissions": [
-        "http://aaa.wkquan.com/",
         "storage"
     ],
     "content_scripts": [
-    	{
-    		"matches":["http://aaa.wkquan.com/Login/*"],
-    		"js": ["jquery.min.js","login.js"],
-    		"run_at": "document_idle"
-    	},
         {
             "matches": ["http://aaa.wkquan.com/*","http://aaa.pk1172.com/*"],
             "js": ["jquery.min.js","wk.js","setting.js"],
