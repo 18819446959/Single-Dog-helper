@@ -75,17 +75,19 @@ function clickHelper(){
 	}*/
 
 	let findLayer = function(iframe, layer, btn){
-		let $layer = iframe.contents().find(layer);
-		let $btn = iframe.contents().find(btn);
-		let $iframe = iframe.contents().find('iframe');
-		console.log("!!!")
-		if(iframe.length > 0 && $layer.length < 0 && $iframe.length > 0){
-			findLayer($iframe, layer);
-		}else if(iframe.length > 0 && $layer.length > 0 && $iframe.length <= 0){
-			return {$layer, $btn};
-		}else{
-			return {$layer, $btn};
+		let obj = null;
+		let find = function(iframe, layer, btn){
+			let $layer = iframe.contents().find(layer);
+			let $btn = iframe.contents().find(btn);
+			let $iframe = iframe.contents().find('iframe');
+			if(iframe.length > 0 && $layer.length <= 0 && $iframe.length > 0){ 
+				find($iframe, layer, btn);
+			}else if(iframe.length > 0 && $layer.length > 0 && $iframe.length <= 0){
+				obj =  {'$layer': $layer, '$btn': $btn};
+			}
 		}
+		find(iframe, layer, btn);
+		return obj;
 	}
 
 	let $iframeContent = $('#ow002 iframe');
@@ -100,6 +102,7 @@ function clickHelper(){
 		if($btn.attr("onclick") == ''){
 			$btn.attr("onclick", "Submit()");
 		}
+		clearInterval(time);
 	}
 }
 

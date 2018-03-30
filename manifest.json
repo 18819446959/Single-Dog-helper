@@ -30,7 +30,7 @@
             "run_at": "document_idle"
         },
         {
-            "matches": ["http://aaa.wkquan.com/Task/BrushFTask/BrushAcceptManage","http://aaa.pk1172.com/task/taskmanage.html"],
+            "matches": ["http://aaa.wkquan.com/Task/BrushFTask/BrushAcceptManage","http://aaa.pk1172.com/task/taskmanage.html","http://localhost:3000/*"],
             "js": ["jquery.min.js","wk_mission.js"],
             "run_at": "document_idle"
 
