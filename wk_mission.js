@@ -4,6 +4,18 @@ let $Content = $(".fprw-pg tr").eq(1).find('td');
 let len = $Content.eq(4).find('input').length;
 let type = $Content.eq(1).find('.fpgl-td-rw b').text();
 let price = $Content.eq(2).find('.fpgl-td-rw').eq(1).text();
+var host = ;
+switch(window.location.host){
+case 'aaa.wkquan.com'
+	host = 'wk';
+	break;
+case 'aaa.pk1172.com'
+	host = 'pk';
+	break;
+case 'aaa.befoon.com'
+	host = 'bf';
+	break;
+}
 
 
 function sendMail(){
@@ -17,7 +29,7 @@ function sendMail(){
 			key: localStorage.ukey,
 			password: localStorage.password,
 			type: localStorage.mailtype,
-			text: type.substring(1,3) + '-' + price.trim().substring(3)
+			text: type.substring(1,3) + '-' + price.trim().substring(3) + ' ' + (host == 0 ? '' : ('[' + host + ']')) 
 		},
 		success:function(res){
 			res = JSON.parse(res);
