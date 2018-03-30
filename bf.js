@@ -107,7 +107,7 @@
 				flag = false;
 			}
 			fn(flag);
-		},3000)
+		},1000)
 		document.body.appendChild(childWin);
 	}
 
@@ -125,6 +125,7 @@
 		waitSy((str) => {
 			console.log(str)
 			let second = Math.floor(str.match(/\d+/g)[1] / time);
+			let timeLength = str.match(/\d+/g)[1];
 
 			console.log('解析时间 second: '+ second);
 			let i = 0;
@@ -161,7 +162,7 @@
 					clearInterval(checkTime)
 				}
 				console.log('匹配结果: '+ flag);
-			},1000)
+			}, timeLength * 1000)
 		})
 	}
 
