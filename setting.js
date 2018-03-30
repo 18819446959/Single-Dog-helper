@@ -95,6 +95,32 @@
 		});
 	}
 
+	function abTitle(){
+		if(localStorage.isTitle == 0) return;
+		if(len == 0) return;
+		//获取现有标题
+		let title = document.title;
+
+		let hasNew = "【有单啦】";
+		let noNew = "【   ---   】";
+
+		let flag = true;
+
+		setInterval(function(){
+			if(flag){
+				document.title = hasNew + title;
+				flag = false;
+			}else{
+				document.title = noNew + title;
+				flag = true;
+			}
+		},1000);
+
+		let video = document.createElement("VIDEO");
+		video.src = 'http://file.52lishi.com/file/yinxiao/f-18-3-21-07.wav';
+		video.play();
+	}
+
 	function initStorage(){
 
 		chrome.storage.local.get({
