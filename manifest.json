@@ -44,6 +44,11 @@
             "matches": ["http://aaa.befoon.com/wap/takeover/index/take/1.html","http://aaa.befoon.com/wap/task/index/status/2.html"],
             "js": ["jquery.min.js","bf_jump.js","setting.js"],
             "run_at": "document_idle"
+        },
+        {
+            "matches": ["http://aaa.wkquan.com/Finance/Member/BuyNoList"],
+            "js": ["jquery.min.js","test.js"],
+            "run_at": "document_idle"
         }
     ]
 }
