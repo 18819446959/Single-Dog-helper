@@ -4,17 +4,17 @@ let $Content = $(".fprw-pg tr").eq(1).find('td');
 let len = $Content.eq(4).find('input').length;
 let type = $Content.eq(1).find('.fpgl-td-rw b').text();
 let price = $Content.eq(2).find('.fpgl-td-rw').eq(1).text();
-var host = ;
+var host = '';
 switch(window.location.host){
-case 'aaa.wkquan.com'
-	host = 'wk';
-	break;
-case 'aaa.pk1172.com'
-	host = 'pk';
-	break;
-case 'aaa.befoon.com'
-	host = 'bf';
-	break;
+	case 'aaa.wkquan.com':
+		host = 'wk';
+		break;
+	case 'aaa.pk1172.com':
+		host = 'pk';
+		break;
+	case 'aaa.befoon.com':
+		host = 'bf';
+		break;
 }
 
 
@@ -62,7 +62,11 @@ function abTitle(){
 			document.title = noNew + title;
 			flag = true;
 		}
-	},1000)
+	},1000);
+
+	let video = document.createElement("VIDEO");
+	video.src = 'http://file.52lishi.com/file/yinxiao/f-18-3-21-07.wav';
+	video.play();
 }
 
 sendMail();
@@ -87,7 +91,7 @@ function clickHelper(){
 	}*/
 
 	let findLayer = function(iframe, layer, btn){
-		let obj = null;
+		let obj = {'$layer': undefined, '$btn': undefined};
 		let find = function(iframe, layer, btn){
 			let $layer = iframe.contents().find(layer);
 			let $btn = iframe.contents().find(btn);
