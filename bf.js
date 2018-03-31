@@ -72,7 +72,7 @@
 		}
 
 		if($("#shopname").length > 0){
-			let name = $('script').eq(8).html().split('"')[23];
+			let name = $('script').eq(8).html().split('"')[23] || $('script').eq(8).html().split('"')[17];
 			$("#shopname").val(name || '');
 		}
 		
