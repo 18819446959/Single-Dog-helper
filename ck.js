@@ -107,6 +107,7 @@
 	 			}else if(res.resultObj.applystatus == 1){
 	 				clearInterval(time);
 	 				console.log('获得订单: ' + res.resultObj.taskid);
+	 				console.log('完成订单后，请重新点击开始!');
 	 				localStorage.auto == 0;
 	 				sendMail();
 	 				abTitle();
