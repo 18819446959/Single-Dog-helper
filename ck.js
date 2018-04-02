@@ -45,6 +45,7 @@
 	 function startMission(){
 	 	if(checkToken()){
 	 		console.log('请登录');
+	 		console.log('如果已登录，请刷新页面');
 	 		return;
 	 	}
 	 	console.log('开始请求排队...');
