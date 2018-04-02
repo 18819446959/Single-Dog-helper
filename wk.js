@@ -114,12 +114,12 @@
 					//等待回调弹窗
 					let $confirmDialog = $('#ow_confirm002');
 					if($confirmDialog.length > 0){
-						if($confirmDialog.find('.sjzc_5_t:first div:first').text() == '当前排队人数大于100,你是否确认接单？'){
+						/*if($confirmDialog.find('.sjzc_5_t:first div:first').text() == '当前排队人数大于100,你是否确认接单？'){
 							$confirmDialog.find('#ow_confirm002_fun2')[0].click();
 							clearInterval(timeConfirm);
 							startMission();
-						}
-						//$confirmDialog[0].click();
+						}*/
+						$confirmDialog.find('#ow_confirm002_fun')[0].click();
 					}
 				},500);
 			},1000)
