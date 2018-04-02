@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Single Dog helper",
-	"version": "3.15",
+	"version": "3.2",
 	"description": "一个很无聊的插件",
 	"icons": {
         "16": "images/dog16.png",
@@ -43,6 +43,11 @@
         {
             "matches": ["http://aaa.befoon.com/wap/takeover/index/take/1.html","http://aaa.befoon.com/wap/task/index/status/2.html"],
             "js": ["jquery.min.js","bf_jump.js","setting.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["http://aaa.chuangkquan.com/*"],
+            "js": ["jquery.min.js","ck.js","setting.js"],
             "run_at": "document_idle"
         }
     ]
