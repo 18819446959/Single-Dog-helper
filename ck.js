@@ -64,11 +64,15 @@
  				token: user.token
 	 		},
 	 		success: function(res){
-	 			console.log('需要排队人数: ' + res.resultObj.queueOrder);
-	 			console.log('开始检查队列...');
-	 			time = setInterval(()=>{
-	 				queryMission(res.resultObj.applyid);
-	 			},3000);
+	 			if(res.errcode){
+		 			console.log('需要排队人数: ' + res.resultObj.queueOrder);
+		 			console.log('开始检查队列...');
+		 			time = setInterval(()=>{
+		 				queryMission(res.resultObj.applyid);
+		 			},3000);
+	 			}else{
+	 				console.log('已经在排队队列，请稍后刷新页面...');
+	 			}
 	 		},
 	 		error: function(){
 	 			console.log('网络错误，请重试');
