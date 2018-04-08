@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Single Dog helper",
-	"version": "3.23",
+	"version": "3.24",
 	"description": "一个很无聊的插件",
 	"icons": {
         "16": "images/dog16.png",
@@ -48,6 +48,11 @@
         {
             "matches": ["http://aaa.chuangkquan.com/*"],
             "js": ["jquery.min.js","ck.js","setting.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["http://aaa.xgkst.com/*"],
+            "js": ["jquery.min.js","yc.js","setting.js"],
             "run_at": "document_idle"
         }
     ]
