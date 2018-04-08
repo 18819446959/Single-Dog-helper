@@ -55,8 +55,12 @@ const initLocalStorage = [
 	 		success: function(res){
 	 			if(res.code == "success"){
 	 				if(res.result.success){
-	 					console.log(res);
-	 					localStorage.auto == 0;
+	 					console.log("已经获取到订单，请及时处理!!!");
+	 					console.log("http://www.hmyhot.com/app/buy/gettask/index.jsp");
+		 				console.log('完成订单后，请重新点击开始!');
+		 				localStorage.auto == 0;
+		 				sendMail();
+		 				abTitle();
 	 				}else{
 	 					console.log(res.result.data);
 	 					if(res.result.data == "不要吃着碗里的看着锅里的，您有未完成的任务哦！"){
