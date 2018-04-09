@@ -114,7 +114,7 @@
 	function waitSy(fn){
 		let sytime = setInterval(()=>{
 			let str = $('#get-queue span').html();
-			if(str){
+			if(str && str.match(/\d+/g) != null){
 				fn(str);
 				clearInterval(sytime);
 			}
@@ -155,7 +155,8 @@
 							//点击跳转
 							window.location.href = '/wap/task/index/status/2.html'
 						}else{
-							window.location.href = '/wap/takeover/index/take/1.html'
+							$('#task_take').submit();
+							/*window.location.href = '/wap/takeover/index/take/1.html'*/
 							//window.location.reload();
 						}
 					});
