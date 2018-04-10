@@ -67,8 +67,18 @@
 		init();
 	}
 
+	let Check = {
+		isCheck: false,
+		getCheck: ()=>{
+			if(!this.isCheck){
+				this.isCheck = document.cookie.indexOf('WKQuanFinePortalFormsCookieName') >= 0;
+			}
+			return this.isCheck;
+		}
+	}
+
 	function startMission(){
-		if(!checkLogin()){
+		if(!Check.getCheck()){
 			console.log('请登录后再试');
 			return;
 		}

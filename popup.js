@@ -203,7 +203,7 @@
         })
         
         if(N_v < L_v){
-        	$('#version').html("有新版本!,要不要考虑更新下!<br><a href='https://github.com/JYMr/Single-Dog-helper' target='about'>https://github.com/JYMr/Single-Dog-helper</a>");
+        	$('#version').html("有新版本!,v"+ L_v +",要不要考虑更新下!<br><a href='https://github.com/JYMr/Single-Dog-helper' target='about'>https://github.com/JYMr/Single-Dog-helper</a>");
         }
     }
 
