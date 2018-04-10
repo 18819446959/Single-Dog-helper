@@ -32,6 +32,10 @@
 		{
 			name: 'TaskPriceEnd',
 			value: ''
+		},
+		{
+			name: 'TaskPriceStart',
+			value: ''
 		}
 	];
 

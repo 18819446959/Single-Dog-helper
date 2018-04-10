@@ -58,6 +58,12 @@
 			dom: "TaskPriceEnd",
 			type: 2,
 			status: ''
+		},
+		{
+			name: "TaskPriceStart",
+			dom: "TaskPriceStart",
+			type: 2,
+			status: ''
 		}
 	];
 
@@ -67,12 +73,14 @@
 		localStorage.password = $("#Password").val();
 		localStorage.mailtype = $("#Mailtype").val();
 		localStorage.TaskPriceEnd = $("#TaskPriceEnd").val();
+		localStorage.TaskPriceStart = $("#TaskPriceStart").val();
 		sendMessage('mail', {
 			mail: localStorage.mail,
 			password: localStorage.password,
 			mailtype: localStorage.mailtype,
 			key: localStorage.ukey,
-			TaskPriceEnd: localStorage.TaskPriceEnd
+			TaskPriceEnd: localStorage.TaskPriceEnd,
+			TaskPriceStart: localStorage.TaskPriceStart
 		});
 	}
 
@@ -98,6 +106,16 @@
 	}
 
 	function initSetting(){
+
+		sendMessageToContentScript({cmd: 'location'}, function(response){
+			if(response){
+				if(response.host != 'aaa.chuangkquan.com'){
+					$('#TaskPriceStart').hide();
+					$('#TaskPriceEnd').removeAttr('style');
+				}
+			}
+		});
+
 		sendMessageToContentScript({cmd: 'GET'}, function(response){
 
 			console.log(response)

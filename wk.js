@@ -75,8 +75,9 @@
 		settingsVal();
 		console.log('提交排队中...');
 		$win.find('form').submit();
-		setTimeout(()=>{
+		let checkTime = setTimeout(()=>{
 			console.log('开始检查队列...')
+			resetBody();
 			checkNum();
 		},1000);
 	}
@@ -125,7 +126,7 @@
 	 			res =eval('('+res+')');
 	 			if(res.QueueCount > 0){
 	 				console.log('需要排队人数: ' + res.QueueCount);
-	 				setTimeout(()=>{
+	 				let checkTime = setTimeout(()=>{
 	 					checkNum();
 	 				}, 4000);
 	 			}else{
@@ -136,23 +137,27 @@
 	 						return;
 	 					}
 	 					console.log('准备重新接单...')
-	 					setTimeout(()=>{
-	 						resetBody();
+	 					let reTime = setTimeout(()=>{
 	 						startMission();
 	 					},1000)
 	 				}else if(res.AcceptResult ==  1){
 	 					console.log('已成功获取任务!!!');
 	 					console.log(window.location.origin + "/Task/BrushFTask/BrushAcceptManage");
+	 					sendMail();
+	 					abTitle();
+	 				}else{
+	 					console.log('查询失败,重试中...')
+	 					let reTime = setTimeout(()=>{
+	 						startMission();
+	 					},1000)
 	 				}
 	 			}
 	 		},
 	 		error: function(){
-	 			console.log('网络错误，请重试');
+	 			console.log('网络错误，重试中...');
+	 			let reTime = setTimeout(()=>{
+					startMission();
+				},1000)
 	 		}
 		})
 	}
-
-
-
-
-	

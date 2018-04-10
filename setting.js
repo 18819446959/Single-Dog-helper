@@ -20,12 +20,14 @@
 		    	localStorage.mailtype = request.value.mailtype;
 		    	localStorage.ukey = request.value.key;
 		    	localStorage.TaskPriceEnd = request.value.TaskPriceEnd;
+		    	localStorage.TaskPriceStart = request.value.TaskPriceStart;
 	    	}else{
 		    	localStorage.mail = '';
 		    	localStorage.ukey = '';
 		    	localStorage.mailtype = '';
 		    	localStorage.password = '';
 		    	localStorage.TaskPriceEnd = '';
+		    	localStorage.TaskPriceStart = '';
     		}
 	    	sendResponse('200');
 	    	return;
@@ -41,7 +43,8 @@
 	    		isTitle: localStorage.isTitle,
 	    		mailtype: localStorage.mailtype,
 	    		password: localStorage.password,
-		    	TaskPriceEnd: localStorage.TaskPriceEnd
+		    	TaskPriceEnd: localStorage.TaskPriceEnd,
+		    	TaskPriceStart: localStorage.TaskPriceStart
 	    	}
 	    	sendResponse(local);
 	    	return;
@@ -49,6 +52,10 @@
 	    if(request.cmd == 'SendTest'){
 	    	sendMail();
 	    	sendResponse("200");
+	    	return;
+	    }
+	    if(request.cmd == 'location'){
+	    	sendResponse(window.location);
 	    	return;
 	    }
 	    handleMessage(request, sendResponse);
@@ -97,7 +104,6 @@
 
 	function abTitle(){
 		if(localStorage.isTitle == 0) return;
-		if(len == 0) return;
 		//获取现有标题
 		let title = document.title;
 
