@@ -65,7 +65,9 @@
 	 			type: 1,
  				masktype: 0,
  				userid: user.userid,
- 				token: user.token
+ 				token: user.token,
+ 				minmoney: localStorage.TaskPriceStart,
+ 				maxmoney: localStorage.TaskPriceEnd
 	 		},
 	 		success: function(res){
 	 			if(res.errcode){
