@@ -167,8 +167,11 @@
 	 						startMission();
 	 					},1000)
 	 				}else if(res.taskAcceptRes ==  'SUCCESS'){
+	 					localStorage.auto = 0;
 	 					console.log('已成功获取任务!!!');
 	 					console.log(window.location.origin + "/Task/BrushFTask/BrushAcceptManage");
+	 					abTitle();
+	 					sendMail();
 	 				}
 	 			}
 	 		},
