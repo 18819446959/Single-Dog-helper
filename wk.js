@@ -71,6 +71,7 @@
 		isCheck: false,
 		getCheck: ()=>{
 			if(!this.isCheck){
+				console.log('检查登录...')
 				this.isCheck = document.cookie.indexOf('WKQuanFinePortalFormsCookieName') >= 0;
 			}
 			return this.isCheck;
@@ -118,11 +119,6 @@
 		if(localStorage.TaskPriceEnd){
 			$win.find('#TaskPriceEnd').val(localStorage.TaskPriceEnd);
 		}
-	}
-
-	function checkLogin(){
-		console.log('检查登录...')
-		return document.cookie.indexOf('WKQuanFinePortalFormsCookieName') >= 0
 	}
 
 	function checkNum(){

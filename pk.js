@@ -1,5 +1,6 @@
 
 
+	
 	const initLocalStorage = [
 		{
 			name: 'auto',
@@ -35,6 +36,8 @@
 		}
 	];
 
+	let startTime = 0;
+
 	function delTC(){
 		var $iframeContent = $('#ow002 iframe');
 		if($iframeContent.length <= 0) return;
@@ -46,86 +49,135 @@
 
 	delTC();
 
-	function waitmission(){
 
-		let time;
-		time = setInterval(function(){
+	//克隆内容主要窗体
+	let $win;
+	let $clone_iframe;
+	
+	function init(){
+		let fm = $('#fm').clone();
+		$clone_iframe = $('<iframe/>').appendTo('body');
+		$clone_iframe.css("visibility", "hidden");
+		$win = $clone_iframe.contents();
+		$win.find('body').append(fm);
+	}
 
-			if($("#hTask2").html() == "接手失败！"){
-				clearInterval(time);
-				//关闭弹窗
-				$('.sjzc_t a')[0].click();
-				//重新接单
-				setTimeout(function(){
-					$('.btn_fail a').eq(0)[0].click();
-				},1000);
-			}
+	init();
 
-			if($("#hTask2").html() == "恭喜你"){
-				clearInterval(time);
-				localStorage.isSend = 1;
-				$('.cpmenulist li').eq(1).find('a')[0].click();
-				//bTitle();
-				//sendMail();
-			}
-
-		},500);
-
+	function resetBody(){
+		$clone_iframe.remove();
+		init();
 	}
 
 	function startMission(){
-		//Start Msiision
-		if($('#ban1').length > 0 && !$('#ban1').is(":hidden")){
-			var typeFlag = $('#bInTimeType').length > 0;
-			setTimeout(function(){
-				if(localStorage.auto == 1){
-					if(localStorage.tb == 0){
-						$('#cbTBPlatformTypess').removeAttr("checked");
-						$('#cbTBPlatformTypess').parent().removeClass("selected");
-						if(typeFlag){
-							$('#bInTimeType')[0].checked = false;
-							$('#aInTimeType')[0].checked = false;
-						}
-					}else{
-						$('#cbTBPlatformTypess').attr("checked","checked");
-						$('#cbTBPlatformTypess').parent().addClass("selected");
-						if(typeFlag){
-							$('#bInTimeType')[0].checked = true;
-							$('#aInTimeType')[0].checked = true;
-						}
-					}
+		if(!checkLogin()){
+			console.log('请登录后再试');
+			return;
+		}
+		settingsVal();
+		queryNum(()=>{
+			console.log('提交排队中...');
+			$win.find('form').submit();
+			resetBody();
+			setTimeout(()=>{
+				console.log('开始检查队列...')
+				checkNum();
+			},1000);
+		});
+	
+	}
 
-					if(localStorage.jd == 0){
-						$('#cbJDPlatformTypess').removeAttr("checked");
-						$('#cbJDPlatformTypess').parent().removeClass("selected");
-					}else{
-						$('#cbJDPlatformTypess').attr("checked","checked");
-						$('#cbJDPlatformTypess').parent().addClass("selected");
-					}
-
-					if(localStorage.TaskPriceEnd){
-						$('#TaskPriceEnd').val(localStorage.TaskPriceEnd);
-					}
-				}
-				$(".actionan a").eq(0)[0].click();
-
-				var timeConfirm = setInterval(function(){
-					//等待回调弹窗
-					let $confirmDialog = $('#ow_confirm002');
-					if($confirmDialog.length > 0){
-						/*if($confirmDialog.find('.sjzc_5_t:first div:first').text() == '当前排队人数大于100,你是否确认接单？'){
-							$confirmDialog.find('#ow_confirm002_fun2')[0].click();
-							clearInterval(timeConfirm);
-							startMission();
-						}*/
-						$confirmDialog.find('#ow_confirm002_fun')[0].click();
-					}
-				},500);
-			},1000)
+	function settingsVal(){
+		console.log('配置参数...');
+		let typeFlag = $win.find('#bInTimeType').length > 0;
+		if(localStorage.tb == 0){
+			$win.find('#cbTBPlatformTypess').removeAttr("checked");
+			if(typeFlag){
+				$win.find('#bInTimeType')[0].checked = false;
+				$win.find('#aInTimeType')[0].checked = false;
+			}
+		}else{
+			$win.find('#cbTBPlatformTypess').attr("checked","checked");
+			if(typeFlag){
+				$win.find('#bInTimeType')[0].checked = true;
+				$win.find('#aInTimeType')[0].checked = true;
+			}
 		}
 
-		if($('#ban2').length > 0 && !$('#ban2').is(":hidden")){
-			console.log("waitmission");
-			waitmission();
+		if(localStorage.jd == 0){
+			$win.find('#cbJDPlatformTypess').removeAttr("checked");
+		}else{
+			$win.find('#cbJDPlatformTypess').attr("checked","checked");
 		}
+
+		if(localStorage.TaskPriceEnd){
+			$win.find('#TaskPriceEnd').val(localStorage.TaskPriceEnd);
+		}
+	}
+
+	function checkLogin(){
+		console.log('检查登录...')
+		return window.location.pathname != '/passport/login.html';
+	}
+
+	function queryNum(fn){
+		console.log('假装检查下人数...')
+		$.ajax({
+			type: 'post',
+	 		url: '/site/queuenum.html',
+	 		data: {
+	 		},
+	 		timeout: 5500,
+	 		success: function(res){
+	 			res =eval('('+res+')');
+	 			console.log('哇！还有这么人: '+res.quenum);
+	 			fn();
+	 		},
+	 		error: function(){
+	 			console.log('接口又TM抽风了...');
+	 			console.log('重试中...');
+	 			setTimeout(()=>{
+ 					queryNum(fn);
+ 				}, 6000);
+	 		}
+	 	});
+	}
+
+	function checkNum(){
+		$.ajax({
+			type: 'post',
+	 		url: '/site/GetQueAcceptRes.html',
+	 		timeout: 5500,
+	 		success: function(res){
+	 			res =eval('('+res+')');
+	 			if(res.queueCount > 0){
+	 				console.log('需要排队人数: ' + res.queueCount);
+	 				setTimeout(()=>{
+	 					checkNum();
+	 				}, 8000);
+	 			}else{
+	 				if(res.taskAcceptRes == 'FAILED'){
+	 					console.log('接手失败...');
+	 					if(localStorage.auto == 0){
+	 						console.log('设置终止');
+	 						return;
+	 					}
+	 					console.log('准备重新接单...')
+	 					setTimeout(()=>{
+	 						startMission();
+	 					},1000)
+	 				}else if(res.taskAcceptRes ==  'SUCCESS'){
+	 					console.log('已成功获取任务!!!');
+	 					console.log(window.location.origin + "/Task/BrushFTask/BrushAcceptManage");
+	 				}
+	 			}
+	 		},
+	 		error: function(){
+	 			console.log('接口又TM抽风了...');
+	 			console.log('重试中...');
+	 			setTimeout(()=>{
+ 					checkNum();
+ 				}, 8000);
+	 		}
+		})
 	}
