@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Single Dog helper",
-	"version": "3.38",
+	"version": "3.39",
 	"description": "一个很无聊的插件",
 	"icons": {
         "16": "images/dog16.png",
@@ -35,7 +35,7 @@
             "run_at": "document_idle"
         },
         {
-            "matches": ["http://aaa.pk1172.com/task/taskmanage.html","http://localhost:3000/*"],
+            "matches": ["http://aaa.pk1172.com/task/taskmanage.html","http://aaa.wkquan2018.com/Task/BrushFTask/BrushAcceptManage","http://localhost:3000/*"],
             "js": ["jquery.min.js","wk_mission.js"],
             "run_at": "document_idle"
         },
