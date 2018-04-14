@@ -90,6 +90,9 @@
 	function settingsVal(){
 		console.log('配置参数...');
 		let typeFlag = $win.find('#bInTimeType').length > 0;
+
+		$win.find("#FineTaskClassType").val('销量任务');
+
 		if(localStorage.tb == 0){
 			$win.find('#cbTBPlatformTypess').removeAttr("checked");
 			if(typeFlag){
