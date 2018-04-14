@@ -83,7 +83,7 @@
 			console.log('请登录后再试');
 			return;
 		}
-		/*settingsVal();
+		settingsVal();
 		console.log('提交排队中...');
 		$win.find('form').submit();
 		let checkTime = setTimeout(()=>{
@@ -92,7 +92,7 @@
 		},1000);
 		setTimeout(()=>{
 			checkNum();
-		},4000)*/
+		},4000)
 	}
 
 	function settingsVal(){
