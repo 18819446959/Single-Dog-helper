@@ -58,6 +58,11 @@
 	    	sendResponse(window.location);
 	    	return;
 	    }
+	    if(request.cmd == 'cookie'){
+	    	localStorage.WKQuanFinePortalFormsCookieName = request.value
+	    	sendResponse('200');
+	    	return;
+	    }
 	    handleMessage(request, sendResponse);
 	});
 
