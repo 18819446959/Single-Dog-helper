@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "Single Dog helper",
-	"version": "3.42",
-	"description": "一个很无聊的插件",
+	"version": "3.43",
+	"description": "一个很无聊的插件|修复PK,WK Bug",
 	"icons": {
         "16": "images/dog16.png",
         "48": "images/dog48.png",
@@ -21,8 +21,12 @@
             "chrome_style": true
     },
 	"permissions": [
-        "storage"
+        "storage",
+        "cookies"
     ],
+    "background":{
+        "scripts": ["background.js"]
+    },
     "content_scripts": [
          {
             "matches": ["http://aaa.wkquan2018.com/*"],
