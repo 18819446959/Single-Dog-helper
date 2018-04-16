@@ -149,6 +149,7 @@
 	 						return;
 	 					}
 	 					console.log('准备重新接单...')
+	 					clearList();
 	 					let reTime = setTimeout(()=>{
 	 						startMission();
 	 					},3000)
@@ -173,4 +174,13 @@
 				},1000)
 	 		}
 		})
+	}
+
+	function clearList(){
+		console.log('假装访问首页...');
+		let $indexiframe = $('<iframe src="/"/>').appendTo('body');
+		$indexiframe.css("visibility", "hidden");
+		setTimeout(()=>{
+			$indexiframe.remove();
+		}, 500);
 	}
