@@ -77,6 +77,8 @@
 		settingsVal();
 		queryNum(()=>{
 			console.log('提交排队中...');
+			startTime = new Date().getTime();
+			$win.find('form').serializeArray()
 			$win.find('form').submit();
 			resetBody();
 			setTimeout(()=>{
@@ -90,8 +92,12 @@
 	function settingsVal(){
 		console.log('配置参数...');
 		let typeFlag = $win.find('#bInTimeType').length > 0;
+
 		let tasklength=$win.find(".task_one input[name='TaskType']:checked").length;
         $win.find(".task_one input[name='TaskTypelen']").val(tasklength);
+
+		$win.find("input[name='outtime']").val(parseInt(new Date().getTime()/1000));
+
 		$win.find("#FineTaskClassType").val('销量任务');
 
 		if(localStorage.tb == 0){
@@ -148,6 +154,7 @@
 	}
 
 	function checkNum(){
+		let checkStartTime = new Date().getTime();
 		$.ajax({
 			type: 'post',
 	 		url: '/site/GetQueAcceptRes.html',
@@ -162,6 +169,7 @@
 	 			}else{
 	 				if(res.taskAcceptRes == 'FAILED'){
 	 					console.log('接手失败...');
+	 					console.warn('用时:' + parseInt(( (new Date().getTime() - startTime) / 1000 )) + 's');
 	 					if(localStorage.auto == 0){
 	 						console.log('设置终止');
 	 						return;

@@ -71,6 +71,10 @@
 			}
 		}
 
+		if($('#btn_task_type_1').length > 0){
+			$('#btn_task_type_1').before('<div class="col-xs-6" style="margin:0 25%"><a href="javascript:void(0);" onclick="checksubmit();" class="btn btn-block org on">下一步</a></div>').remove();
+		}
+
 		if($("#shopname").length > 0){
 			let name = $('script').eq(8).html().split('"')[23] || $('script').eq(8).html().split('"')[17];
 			$("#shopname").val(name || '');
