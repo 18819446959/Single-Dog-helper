@@ -85,7 +85,7 @@
 
 	
 	function sendMail(){
-		if(!localStorage.mail && localStorage.isMail == 0) return;
+		if(localStorage.mail == '' || localStorage.mail == 'undefined' || localStorage.isMail == 0) return;
 		var mailText = localStorage.mailtype == 0 ? "@126.com" : "@qq.com";
 		$.ajax({
 			url: 'https://api.77lemon.top/SendMail.htm',

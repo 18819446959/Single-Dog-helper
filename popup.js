@@ -184,14 +184,12 @@
 	function getVersion(){
 		var L_v,
 			N_v;
-		var remark;
         $.ajax({
             url: "https://raw.githubusercontent.com/JYMr/Single-Dog-helper/master/manifest.json",
             async: false,
             dataType: 'json',
             success: function(res){
                 L_v = res.version;
-                remark = res.description.split('|')[1] || '';
             }
         })
 
@@ -205,7 +203,7 @@
         })
         
         if(N_v < L_v){
-        	$('#version').html("有新版本!,v"+ L_v + '-' +remark + '-' +",要不要考虑更新下!<br><a href='https://github.com/JYMr/Single-Dog-helper' target='about'>https://github.com/JYMr/Single-Dog-helper</a>");
+        	$('#version').html("有新版本!,v"+ L_v +",要不要考虑更新下!<br><a href='https://github.com/JYMr/Single-Dog-helper' target='about'>https://github.com/JYMr/Single-Dog-helper</a>");
         }
     }
 

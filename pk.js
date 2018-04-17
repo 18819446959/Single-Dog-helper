@@ -90,7 +90,8 @@
 	function settingsVal(){
 		console.log('配置参数...');
 		let typeFlag = $win.find('#bInTimeType').length > 0;
-
+		let tasklength=$win.find(".task_one input[name='TaskType']:checked").length;
+        $win.find(".task_one input[name='TaskTypelen']").val(tasklength);
 		$win.find("#FineTaskClassType").val('销量任务');
 
 		if(localStorage.tb == 0){
