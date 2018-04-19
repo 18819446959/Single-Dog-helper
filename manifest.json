@@ -29,7 +29,7 @@
     },
     "content_scripts": [
          {
-            "matches": ["http://aaa.wkquan2018.com/","http://aaa.wkquan2018.com/?Length=7"],
+            "matches": ["http://aaa.wkquan2018.com/","http://aaa.wkquan2018.com/?Length=7","http://aaa.wkquan2018.com/Home/Index"],
             "js": ["jquery.min.js","wk.js","setting.js"],
             "run_at": "document_idle"
         },
