@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Single Dog helper",
-	"version": "3.47",
+	"version": "3.48",
 	"description": "一个很无聊的插件",
 	"icons": {
         "16": "images/dog16.png",
