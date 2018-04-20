@@ -38,6 +38,8 @@
 
 	let startTime = 0;
 
+	let checkTime = 0;
+
 	function delTC(){
 		var $iframeContent = $('#ow002 iframe');
 		if($iframeContent.length <= 0) return;
@@ -73,6 +75,12 @@
 		if(!checkLogin()){
 			console.log('请登录后再试');
 			return;
+		}
+		if(checkTime >= 3){
+			checkMission();
+			checkTime = 0;
+		}else{
+			checkTime++;
 		}
 		settingsVal();
 		queryNum(()=>{
@@ -195,4 +203,15 @@
  				}, 8000);
 	 		}
 		})
+	}
+
+	function checkMission(){
+		let $Missioniframe = $('<iframe src="/task/taskmanage.html" />');
+		$Missioniframe.on('load',function(){
+			let len = $Missioniframe.contents().find('.fprw-pg tr').eq(1).find('td').eq(4).find('input').length;
+			if(len > 0){
+				localStorage.auto = 0;
+				window.location.href = '/task/taskmanage.html';
+			}
+		});
 	}
