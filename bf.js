@@ -71,16 +71,31 @@
 			}
 		}
 
+		//自动添加下一步按钮
 		if($('#btn_task_type_1').length > 0){
 			$('#btn_task_type_1').before('<div class="col-xs-6" style="margin:0 25%"><a href="javascript:void(0);" onclick="checksubmit();" class="btn btn-block org on">下一步</a></div>').remove();
 		}
 
+		//自动填写店铺名
 		if($("#shopname").length > 0){
 			let name = $('script').eq(8).html().split('"')[23] || $('script').eq(8).html().split('"')[17];
 			$("#shopname").val(name || '');
 		}
-		
+
 	}
+
+	//自动勾选
+	let timeCheckBox = setInterval(()=>{
+		let $checkBox = $('.task3-c input[type=checkbox]');
+		if($checkBox.length > 0){
+			$checkBox.each(function(){
+				let $_obj = $(this);
+				$_obj.prop('checked', true).val(1);
+				$_obj.parents('label').addClass('on');
+			})
+		}
+	}, 1000)
+	
 
 	function waitFirstLayer(){
 		setTimeout(function(){
