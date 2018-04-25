@@ -211,7 +211,7 @@
 			let $Btn = $Missioniframe.contents().find('.fprw-pg tr').eq(1).find('td').eq(4).find('input'); 
 			let len = $Btn.length;
 
-			if(len > 0 && $Btn.val() != '开始评价'){
+			if(len > 0 && $Btn.eq(0).val() != '立即评价'){
 				localStorage.auto = 0;
 				window.location.href = '/task/taskmanage.html';
 			}
