@@ -208,8 +208,10 @@
 	function checkMission(){
 		let $Missioniframe = $('<iframe src="/task/taskmanage.html" />').appendTo('body');
 		$Missioniframe.on('load',function(){
-			let len = $Missioniframe.contents().find('.fprw-pg tr').eq(1).find('td').eq(4).find('input').length;
-			if(len > 0){
+			let $Btn = $Missioniframe.contents().find('.fprw-pg tr').eq(1).find('td').eq(4).find('input'); 
+			let len = $Btn.length;
+
+			if(len > 0 && $Btn.val() != '开始评价'){
 				localStorage.auto = 0;
 				window.location.href = '/task/taskmanage.html';
 			}
