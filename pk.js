@@ -36,101 +36,32 @@
 		}
 	];
 
-	let startTime = 0;
-
-	let checkTime = 0;
-
-	function delTC(){
-		var $iframeContent = $('#ow002 iframe');
-		if($iframeContent.length <= 0) return;
-		$iframeContent[0].onload = function(){
-			var $content = $iframeContent.contents();
-			$content.find('#ok').removeAttr('disabled')[0].click();
-		}
-	}
-
-	delTC();
-
-
 	//克隆内容主要窗体
-	let $win;
-	let $clone_iframe;
-	
-	function init(){
-		let fm = $('#fm').clone();
-		$clone_iframe = $('<iframe/>').appendTo('body');
-		$clone_iframe.css("visibility", "hidden");
-		$win = $clone_iframe.contents();
-		$win.find('body').append(fm);
-	}
-
-	init();
-
-	function resetBody(){
-		$clone_iframe.remove();
-		init();
-	}
+	let socketAll;
 
 	function startMission(){
 		if(!checkLogin()){
 			console.log('请登录后再试');
 			return;
 		}
-		if(checkTime >= 3){
-			checkMission();
-			checkTime = 0;
-		}else{
-			checkTime++;
-		}
-		settingsVal();
-		queryNum(()=>{
-			console.log('提交排队中...');
-			startTime = new Date().getTime();
-			$win.find('form').serializeArray()
-			$win.find('form').submit();
-			resetBody();
-			setTimeout(()=>{
-				console.log('开始检查队列...')
-				checkNum();
-			},1000);
-		});
-	
+		let settingObj = settingsVal();
+		socketAll = comfirmOrder(settingObj);
+		setInterval(()=>{
+			if(localStorage.auto == 0){
+				socketAll.close();
+			}
+		})
 	}
 
 	function settingsVal(){
-		console.log('配置参数...');
-		let typeFlag = $win.find('#bInTimeType').length > 0;
+		let outtime = parseInt(new Date().getTime()/1000);
+		let PlatformTypes = 0;
+		let TaskType = "无线端";
+		let TaskTypelen = 2;
+		let TaskPriceEnd = localStorage.TaskPriceEnd || '';
 
-		let tasklength=$win.find(".task_one input[name='TaskType']:checked").length;
-        $win.find(".task_one input[name='TaskTypelen']").val(tasklength);
-
-		$win.find("input[name='outtime']").val(parseInt(new Date().getTime()/1000));
-
-		$win.find("#FineTaskClassType").val('销量任务');
-
-		if(localStorage.tb == 0){
-			$win.find('#cbTBPlatformTypess').removeAttr("checked");
-			if(typeFlag){
-				$win.find('#bInTimeType')[0].checked = false;
-				$win.find('#aInTimeType')[0].checked = false;
-			}
-		}else{
-			$win.find('#cbTBPlatformTypess').attr("checked","checked");
-			if(typeFlag){
-				$win.find('#bInTimeType')[0].checked = true;
-				$win.find('#aInTimeType')[0].checked = true;
-			}
-		}
-
-		if(localStorage.jd == 0){
-			$win.find('#cbJDPlatformTypess').removeAttr("checked");
-		}else{
-			$win.find('#cbJDPlatformTypess').attr("checked","checked");
-		}
-
-		if(localStorage.TaskPriceEnd){
-			$win.find('#TaskPriceEnd').val(localStorage.TaskPriceEnd);
-		}
+		return {"outtime":outtime,"FGPlatformTypes":PlatformTypes,"FGTaskType":TaskType,"FGTaskTypelen":TaskTypelen
+                ,"FGTaskPriceEnd":TaskPriceEnd,"FineTaskClassType":"销量任务"};
 	}
 
 	function checkLogin(){
@@ -138,83 +69,113 @@
 		return window.location.pathname != '/passport/login.html';
 	}
 
-	function queryNum(fn){
-		console.log('假装检查下人数...')
+
+	function comfirmOrder(obj){
+		console.log('提交订单...')
 		$.ajax({
-			type: 'post',
-	 		url: '/site/queuenum.html',
-	 		data: {
-	 		},
-	 		timeout: 5500,
-	 		success: function(res){
-	 			res =eval('('+res+')');
-	 			console.log('哇！还有这么人: '+res.quenum);
-	 			fn();
-	 		},
-	 		error: function(){
-	 			console.log('接口又TM抽风了...');
-	 			console.log('重试中...');
-	 			setTimeout(()=>{
- 					queryNum(fn);
- 				}, 6000);
-	 		}
-	 	});
+            type:'POST',
+            url:"/site/acceptTask01.html",
+            data: obj,
+			timeout: 0,
+            dataType:'json',
+            success:function(data){
+                if(data.acceptarr.err_code == 2){
+                    console.log(data.acceptarr.msg);
+                    window.location.href='/site/index.html';
+                }
+                if( data.length == 1 && data.acceptarr.err_code == 9 ){
+                	console.log(data.acceptarr.msg);
+                	console.log('准备建立查询连接...')
+                	setTimeout(()=>{
+                		socketAll = checkNum(localStorage.TaskPriceEnd || '');
+                	}, 1000)
+                }
+            },
+            error:function(data){
+               console.log('网络错误,重试中...')
+                setTimeout(()=>{
+                	comfirmOrder(obj);
+                }, 3000);
+            }
+        });
 	}
 
-	function checkNum(){
-		let checkStartTime = new Date().getTime();
-		$.ajax({
-			type: 'post',
-	 		url: '/site/GetQueAcceptRes.html',
-	 		timeout: 5500,
-	 		success: function(res){
-	 			res =eval('('+res+')');
-	 			if(res.queueCount > 0){
-	 				console.log('需要排队人数: ' + res.queueCount);
-	 				setTimeout(()=>{
-	 					checkNum();
-	 				}, 8000);
-	 			}else{
-	 				if(res.taskAcceptRes == 'FAILED'){
-	 					console.log('接手失败...');
-	 					console.warn('用时:' + parseInt(( (new Date().getTime() - startTime) / 1000 )) + 's');
-	 					if(localStorage.auto == 0){
-	 						console.log('设置终止');
-	 						return;
-	 					}
-	 					console.log('准备重新接单...')
-	 					setTimeout(()=>{
-	 						startMission();
-	 					},1000)
-	 				}else if(res.taskAcceptRes ==  'SUCCESS'){
-	 					localStorage.auto = 0;
-	 					console.log('已成功获取任务!!!');
-	 					console.log(window.location.origin + "/Task/BrushFTask/BrushAcceptManage");
-	 					abTitle();
-	 					sendMail();
-	 				}
-	 			}
-	 		},
-	 		error: function(){
-	 			console.log('接口又TM抽风了...');
-	 			console.log('重试中...');
-	 			setTimeout(()=>{
- 					checkNum();
- 				}, 8000);
-	 		}
-		})
-	}
-
-	function checkMission(){
-		let $Missioniframe = $('<iframe src="/task/taskmanage.html" />').appendTo('body');
-		$Missioniframe.on('load',function(){
-			let $Btn = $Missioniframe.contents().find('.fprw-pg tr').eq(1).find('td').eq(4).find('input'); 
-			let len = $Btn.length;
-
-			if(len > 0 && $Btn.eq(0).val() != '立即评价'){
+    function checkNum(TaskPrice, DownTaskPoint=0, TaskCategory=0){
+    	let checkSocketTime;
+    	console.log('建立查询连接...')
+    	let id = $('script').eq(7).html().split('UserID=')[1].split('&TaskPrice')[0]
+    	let socket = new WebSocket("ws://119.29.115.63:9877/Task?UserID="+id+"&TaskPrice="+TaskPrice+"&DownTaskPoint="+DownTaskPoint+"&TaskCategory="+TaskCategory+" ");
+		socket.open = function(event) {
+			console.log('建立成功...')
+		}
+		socket.onmessage = function (event) {
+			let obj = JSON.parse(event.data);
+			 if(obj.IsOK){
+			 	if(obj.RType == 1){
+                    console.log('当前可接任务数： '+obj.Data);
+                    if(obj.Data == 0){
+                    	checkSocketTime = setInterval(()=>{
+                    		checkLine(checkSocketTime);
+                    	}, 4000);
+                    }else{
+                    	clearInterval(checkSocketTime);
+                    }
+                }else if(obj.RType == 100){
+                    if(socket){
+                        socket.close();
+                    }
+                    console.log('已成功获取任务!!!');
+                    console.log('任务ID：'+ obj.Data.TaskID +'\n店铺名称：'+obj.Data.ShopName+'\n任务说明：'+obj.Data.Task_Remark+'\n佣金：'+obj.Data.UTask_Commission)
+                    console.log('http://task/Tasktestone/taskid/'+obj.Data.TaskID+'/shebei/PC.html')
+                    sendMail();
+                    abTitle();
+                }
+			}else{
+				console.log(obj.Description)
 				localStorage.auto = 0;
-				window.location.href = '/task/taskmanage.html';
+				socket.close();
+				if(obj.Description == '系统断定您接任务的操作过于频繁，请在三分钟后再进行该操作'){
+					waitMission();
+				}
 			}
-			$Missioniframe.remove();
-		});
-	}
+		}
+		socket.onclose = function (event) {
+			if(localStorage.auto == 1){
+				console.log('失去连接,尝试重新连接....')
+				setTimeout(()=>{
+					checkNum(localStorage.TaskPrice);
+				}, 3000)
+			}else{
+				console.log('手动终止...')
+			}
+        }
+        return socket;
+    }
+
+    function waitMission(){
+    	console.log('自动进入等待...')
+    	console.log('等待3分钟...');
+    	let sTemp = 3 * 60;
+    	let waitTime = setInterval(()=>{
+    		sTemp--;
+    		console.log('剩余' + sTemp)
+    		if(sTemp == 0){
+    			clearInterval(waitTime)
+    			let obj = settingsVal();
+				localStorage.auto = 1;
+    			socketAll = comfirmOrder(obj);
+    		}
+    	}, 1000);
+    }
+
+    function checkLine(checkSocketTime){
+    	console.log(socketAll.readyState)
+    	console.log('检查连接状态:' + socketAll.readyState == 1 ? '正常' : '断开');
+		if(socketAll.readyState == 0){
+			console.log('连接已断开，请重新开始...');
+			clearInterval(checkSocketTime);
+		}
+		if(localStorage.auto){
+			clearInterval(checkSocketTime)
+		}
+    }

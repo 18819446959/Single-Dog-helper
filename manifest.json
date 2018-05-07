@@ -34,6 +34,11 @@
             "run_at": "document_idle"
         },
         {
+            "matches": ["http://aaa.pk1172.com/site/index.html"],
+            "js": ["jquery.min.js","pk.js","setting.js"],
+            "run_at": "document_idle"
+        },
+        {
             "matches": ["http://aaa.pk1172.com/*"],
             "js": ["jquery.min.js"],
             "run_at": "document_idle"
