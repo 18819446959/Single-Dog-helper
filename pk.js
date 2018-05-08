@@ -103,7 +103,7 @@
     function checkNum(TaskPrice, DownTaskPoint=0, TaskCategory=0){
     	let checkSocketTime;
     	console.log('建立查询连接...')
-    	let id = $('script').eq(7).html().split('UserID=')[1].split('&TaskPrice')[0]
+    	let id = $('html').html().split('UserID=')[1].split('&TaskPrice')[0]
     	let socket = new WebSocket("ws://119.29.115.63:9877/Task?UserID="+id+"&TaskPrice="+TaskPrice+"&DownTaskPoint="+DownTaskPoint+"&TaskCategory="+TaskCategory+" ");
 		socket.open = function(event) {
 			console.log('建立成功...')
@@ -169,8 +169,9 @@
     }
 
     function checkLine(checkSocketTime){
+    	let status = socketAll.readyState == 1 ? '正常' : '断开';
     	console.log(socketAll.readyState)
-    	console.log('检查连接状态:' + socketAll.readyState == 1 ? '正常' : '断开');
+    	console.log('检查连接状态:' + status);
 		if(socketAll.readyState == 0){
 			console.log('连接已断开，请重新开始...');
 			clearInterval(checkSocketTime);
